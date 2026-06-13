@@ -24,15 +24,18 @@ class ProductServiceIntegrationTest {
 
     @MockitoBean
     private ProductRepository productRepository;
+    private Product createProduct(String name, double price, int stock) {
+    return Product.builder()
+            .name(name)
+            .price(price)
+            .stock(stock)
+            .build();
+}
 
     @Test
     @DisplayName("Debe guardar un producto válido correctamente")
     void shouldSaveValidProduct() {
-        Product input = Product.builder()
-                .name("Auriculares Sony")
-                .price(320.00)
-                .stock(15)
-                .build();
+        Product input = createProduct("Auriculares Sony", 320.00, 15);
         Product expected = Product.builder()
                 .id(1L)
                 .name("Auriculares Sony")
@@ -51,11 +54,7 @@ class ProductServiceIntegrationTest {
     @Test
     @DisplayName("Debe lanzar excepción cuando el precio es cero o negativo")
     void shouldThrowExceptionWhenPriceIsInvalid() {
-        Product product = Product.builder()
-                .name("Producto inválido")
-                .price(0.0)
-                .stock(5)
-                .build();
+        Product product = createProduct("Producto inválido", 0.0, 5);
 
         assertThatThrownBy(() -> productService.save(product))
                 .isInstanceOf(IllegalArgumentException.class)
