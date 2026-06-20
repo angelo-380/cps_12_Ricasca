@@ -44,6 +44,7 @@ jobs:
           --no-transfer-progress
           -Dsonar.projectKey=6c94f21dceb49e6811e0df1af4552726ffbcd8cb
           -Dsonar.organization=angelo-380
+          -Dsonar.branch.name=main
 
       - name: 7 - Publicar reporte de pruebas
         uses: actions/upload-artifact@v4
